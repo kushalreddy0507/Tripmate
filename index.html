@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TripMate - Plan Your Next Adventure</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="auth.css">
+</head>
+
+<body>
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="#home" class="logo">
+                <i class="fa-solid fa-compass"></i> TripMate<span>.</span>
+            </a>
+            <nav class="navbar">
+                <a href="#home">Home</a>
+                <a href="#explore">Explore</a>
+                <a href="#planner">Plan Trip</a>
+                <a href="#itinerary">Itinerary</a>
+                <a href="#budget">Budget</a>
+                <a href="#trips">My Trips</a>
+            </nav>
+
+            <!-- THEME SWITCHER -->
+            <div class="theme-switch-wrapper">
+                <button id="theme-sunset" class="theme-toggle-btn active" data-set-theme="sunset" title="Sunset Horizon Theme">
+                    <i class="fa-solid fa-sun"></i> <span>Sunset</span>
+                </button>
+                <button id="theme-midnight" class="theme-toggle-btn" data-set-theme="midnight" title="Midnight Luxury Theme">
+                    <i class="fa-solid fa-moon"></i> <span>Midnight</span>
+                </button>
+            </div>
+
+            <!-- AUTH NAV BUTTONS -->
+            <div class="auth-nav-area">
+                <!-- Logged-out state -->
+                <div id="auth-logged-out" class="auth-nav-btns">
+                    <button class="btn-auth-outline" id="nav-login-btn">
+                        <i class="fa-solid fa-right-to-bracket"></i> Login
+                    </button>
+                    <button class="btn btn-auth-primary" id="nav-signup-btn">
+                        <i class="fa-solid fa-user-plus"></i> Sign Up
+                    </button>
+                </div>
+                <!-- Logged-in state -->
+                <div id="auth-logged-in" class="user-pill hidden">
+                    <div class="user-pill-avatar" id="user-initials">U</div>
+                    <span id="user-display-name">User</span>
+                    <button id="nav-logout-btn" class="pill-logout-btn" title="Logout">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- HERO SECTION -->
+        <section id="home" class="hero-section">
+            <div class="hero-content">
+                <span class="hero-tagline">✨ Explore The World Seamlessly</span>
+                <h1>Welcome to <span>TripMate!</span></h1>
+                <p>Your journey begins here. Create personalized itineraries, manage your travel expenses, and discover unforgettable destinations.</p>
+                <div class="hero-actions">
+                    <a href="#planner" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i> Plan Your Trip</a>
+                    <a href="#explore" class="btn btn-secondary">Explore Places</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXPLORE POPULAR DESTINATIONS -->
+        <section id="explore" class="section">
+            <div class="section-header">
+                <span class="hero-tagline" style="margin-bottom: 0.8rem; background: rgba(249, 115, 22, 0.2); border-color: rgba(249, 115, 22, 0.4); color: var(--text-main);">
+                    <i class="fa-solid fa-database"></i> Comprehensive All-India Dataset • 900+ Sightseeing Attractions • 870+ Party Venues • 1,300+ Stays
+                </span>
+                <h2>Explore Destinations, Nightlife & Accommodations Across India</h2>
+                <p>Discover 3,000+ verified attractions, pubs, clubs, beach shacks, Airbnbs, luxury villas, single rooms, and resorts across all 218 cities in 35 states.</p>
+            </div>
+
+            <!-- DESTINATION CONTROLS, EXPERIENCE TABS & BUDGET FILTER -->
+            <div class="explore-controls-wrapper">
+                
+                <!-- PRIMARY EXPERIENCE TABS -->
+                <div class="experience-tabs" id="experience-tabs">
+                    <button class="exp-tab-btn active" data-exp="all">
+                        <i class="fa-solid fa-layer-group"></i> All Highlights
+                    </button>
+                    <button class="exp-tab-btn" data-exp="sightseeing">
+                        <i class="fa-solid fa-landmark"></i> Places to Visit
+                    </button>
+                    <button class="exp-tab-btn" data-exp="party">
+                        <i class="fa-solid fa-martini-glass-citrus"></i> Party & Nightlife
+                    </button>
+                    <button class="exp-tab-btn" data-exp="stays">
+                        <i class="fa-solid fa-bed"></i> Accommodations & Stays
+                    </button>
+                </div>
+
+                <div class="filters-row-main">
+                    <!-- Zone Filter -->
+                    <div class="filter-box">
+                        <label for="zone-filter"><i class="fa-solid fa-earth-asia"></i> Zone:</label>
+                        <select id="zone-filter" class="city-dropdown">
+                            <option value="all">🌏 All Zones (India)</option>
+                            <option value="Northern">Northern Zone (Delhi, HP, J&K, Rajasthan...)</option>
+                            <option value="Southern">Southern Zone (Goa, Kerala, Karnataka...)</option>
+                            <option value="Western">Western Zone (Maharashtra, Gujarat...)</option>
+                            <option value="Central">Central Zone (UP, MP...)</option>
+                            <option value="Eastern">Eastern Zone (West Bengal, Odisha, Sikkim...)</option>
+                            <option value="North Eastern">North Eastern Zone (Assam, Meghalaya...)</option>
+                        </select>
+                    </div>
+
+                    <!-- City Selector Dropdown -->
+                    <div class="filter-box">
+                        <label for="explore-city-select"><i class="fa-solid fa-city"></i> City / Destination:</label>
+                        <select id="explore-city-select" class="city-dropdown">
+                            <option value="all">🌟 All Cities (219 Cities)</option>
+                        </select>
+                    </div>
+
+                    <!-- Live Search -->
+                    <div class="city-search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="city-search-input" placeholder="Search places, clubs, stays, villas, airbnbs...">
+                    </div>
+                </div>
+
+                <!-- DYNAMIC BUDGET ADJUSTER CARD -->
+                <div class="budget-filter-card">
+                    <div class="budget-filter-header">
+                        <div class="budget-filter-title">
+                            <i class="fa-solid fa-sliders" style="color: var(--primary-color);"></i>
+                            <span>Adjust Your Budget Limit:</span>
+                            <span id="budget-value-display" class="budget-badge-val">All Budgets (No Limit)</span>
+                        </div>
+                        <button id="reset-budget-btn" class="budget-clear-btn" title="Remove budget filter">
+                            <i class="fa-solid fa-infinity"></i> Clear Budget Filter
+                        </button>
+                    </div>
+
+                    <div class="budget-slider-wrapper">
+                        <span class="budget-range-min">₹0</span>
+                        <input type="range" id="explore-budget-slider" min="500" max="25000" step="500" value="25000" class="budget-slider" aria-label="Filter by Maximum Budget">
+                        <span class="budget-range-max">₹25,000+</span>
+                    </div>
+
+                    <!-- Quick Budget Preset Tiers -->
+                    <div class="budget-quick-pills">
+                        <span class="quick-label"><i class="fa-solid fa-bolt"></i> Quick Tiers:</span>
+                        <button class="budget-pill active" data-budget="all">All Budgets</button>
+                        <button class="budget-pill" data-budget="1000">🪙 Under ₹1,000</button>
+                        <button class="budget-pill" data-budget="3000">💵 Under ₹3,000</button>
+                        <button class="budget-pill" data-budget="6000">💎 Under ₹6,000</button>
+                        <button class="budget-pill" data-budget="15000">🏰 Under ₹15,000</button>
+                        <button class="budget-pill" data-budget="luxury">👑 Luxury (₹15,000+)</button>
+                    </div>
+                </div>
+
+                <!-- SUB-FILTERS: Sightseeing Categories -->
+                <div class="category-pills subfilter-group" id="sightseeing-pills">
+                    <span class="subfilter-label"><i class="fa-solid fa-compass"></i> Sightseeing:</span>
+                    <button class="pill-btn active" data-filter="all">All Spots</button>
+                    <button class="pill-btn" data-filter="heritage"><i class="fa-solid fa-landmark"></i> Forts & Palaces</button>
+                    <button class="pill-btn" data-filter="spiritual"><i class="fa-solid fa-om"></i> Temples & Spiritual</button>
+                    <button class="pill-btn" data-filter="mountains"><i class="fa-solid fa-mountain"></i> Mountains & Hills</button>
+                    <button class="pill-btn" data-filter="beaches"><i class="fa-solid fa-umbrella-beach"></i> Beaches & Islands</button>
+                    <button class="pill-btn" data-filter="nature"><i class="fa-solid fa-leaf"></i> Nature & Lakes</button>
+                </div>
+
+                <!-- SUB-FILTERS: Accommodation Stays -->
+                <div class="category-pills subfilter-group" id="stays-pills">
+                    <span class="subfilter-label"><i class="fa-solid fa-hotel"></i> Stay Types:</span>
+                    <button class="pill-stay-btn active" data-stay="all">All Stays</button>
+                    <button class="pill-stay-btn" data-stay="airbnb"><i class="fa-solid fa-house-chimney"></i> Airbnb Studios</button>
+                    <button class="pill-stay-btn" data-stay="single_room"><i class="fa-solid fa-bed"></i> Single / Solo Rooms</button>
+                    <button class="pill-stay-btn" data-stay="villa"><i class="fa-solid fa-chess-rook"></i> Luxury Villas</button>
+                    <button class="pill-stay-btn" data-stay="homestay"><i class="fa-solid fa-people-roof"></i> Homestays</button>
+                    <button class="pill-stay-btn" data-stay="resort"><i class="fa-solid fa-champagne-glasses"></i> Resorts & Hotels</button>
+                </div>
+
+            </div>
+
+            <!-- RESULTS STATUS BAR -->
+            <div class="results-bar">
+                <span id="results-count"><i class="fa-solid fa-compass"></i> Showing places & stays...</span>
+                <button id="reset-filters-btn" class="btn-reset" title="Clear all filters"><i class="fa-solid fa-rotate-left"></i> Reset All Filters</button>
+            </div>
+
+            <!-- DYNAMIC DESTINATIONS GRID -->
+            <div id="destinations-grid" class="destinations-grid">
+                <!-- Dynamically populated from places-data.js -->
+            </div>
+
+            <!-- LOAD MORE BUTTON -->
+            <div class="load-more-container">
+                <button id="load-more-btn" class="btn btn-secondary">
+                    <i class="fa-solid fa-angles-down"></i> Load More Destinations
+                </button>
+            </div>
+        </section>
+
+        <!-- DESTINATION DETAILS / SPOTLIGHT -->
+        <section id="destinations" class="section section-alt">
+            <div class="section-header">
+                <h2>Featured Destination Spotlight</h2>
+                <p>In-depth travel guide with timings, entry fees, and Google review ratings directly from the dataset.</p>
+            </div>
+
+            <div id="destination-spotlight-container" class="destination-details-container">
+                <!-- Dynamically populated or interactive spotlight -->
+            </div>
+        </section>
+
+        <!-- TRIP PLANNER -->
+        <section id="planner" class="section">
+            <div class="section-header">
+                <h2>Plan Your Trip & Live Transit Calculator</h2>
+                <p>Select your starting state and city, pick your destination, choose your mode of transport, and get live distance and travel time calculations instantly!</p>
+            </div>
+
+            <div class="planner-wrapper">
+                <form id="trip-form" class="planner-form">
+                    <div class="form-grid">
+                        <!-- STARTING LOCATION: STATE & CITY -->
+                        <div class="form-group">
+                            <label for="start-state"><i class="fa-solid fa-map-location-dot"></i> Starting State (India):</label>
+                            <select id="start-state" name="startState" required>
+                                <option value="">Select Origin State / UT</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="start-city"><i class="fa-solid fa-city"></i> Starting City / District:</label>
+                            <select id="start-city" name="startCity" required disabled>
+                                <option value="">First select a state above</option>
+                            </select>
+                        </div>
+
+                        <!-- DESTINATION: STATE & CITY -->
+                        <div class="form-group">
+                            <label for="dest-state"><i class="fa-solid fa-map-pin"></i> Destination State:</label>
+                            <select id="dest-state" name="destState" required>
+                                <option value="">Select Destination State / UT</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dest-city"><i class="fa-solid fa-location-dot"></i> Destination City / District:</label>
+                            <select id="dest-city" name="destCity" required disabled>
+                                <option value="">First select a destination state</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- MODE OF TRANSPORT SELECTOR -->
+                    <div class="transport-selector-container">
+                        <label class="transport-label"><i class="fa-solid fa-route"></i> Mode of Transport:</label>
+                        <div class="transport-pills">
+                            <button type="button" class="transport-btn active" data-mode="car">
+                                <i class="fa-solid fa-car"></i>
+                                <div class="t-info">
+                                    <strong>Car</strong>
+                                    <small>Own Vehicle</small>
+                                </div>
+                            </button>
+                            <button type="button" class="transport-btn" data-mode="bike">
+                                <i class="fa-solid fa-motorcycle"></i>
+                                <div class="t-info">
+                                    <strong>Bike</strong>
+                                    <small>Own Vehicle</small>
+                                </div>
+                            </button>
+                            <button type="button" class="transport-btn" data-mode="bus">
+                                <i class="fa-solid fa-bus"></i>
+                                <div class="t-info">
+                                    <strong>Bus</strong>
+                                    <small>Intercity</small>
+                                </div>
+                            </button>
+                            <button type="button" class="transport-btn" data-mode="train">
+                                <i class="fa-solid fa-train"></i>
+                                <div class="t-info">
+                                    <strong>Train</strong>
+                                    <small>Express / Vande Bharat</small>
+                                </div>
+                            </button>
+                            <button type="button" class="transport-btn" data-mode="flight">
+                                <i class="fa-solid fa-plane-departure"></i>
+                                <div class="t-info">
+                                    <strong>Flight</strong>
+                                    <small>Air Travel</small>
+                                </div>
+                            </button>
+                        </div>
+                        <input type="hidden" id="selected-transport" name="transportMode" value="car">
+                    </div>
+
+                    <!-- LIVE ROUTE & DISTANCE INTELLIGENCE CARD -->
+                    <div id="route-intel-box" class="route-intel-card">
+                        <div class="route-header">
+                            <div class="route-cities">
+                                <span id="route-from"><i class="fa-solid fa-circle-dot" style="color: #10b981;"></i> Select Starting Point</span>
+                                <i class="fa-solid fa-arrow-right-long route-arrow"></i>
+                                <span id="route-to"><i class="fa-solid fa-location-dot" style="color: #ef4444;"></i> Select Destination</span>
+                            </div>
+                            <span id="route-mode-badge" class="badge-pill">🚗 Car (Own)</span>
+                        </div>
+                        <div class="route-metrics-grid">
+                            <div class="r-metric">
+                                <span class="r-label"><i class="fa-solid fa-road"></i> Live Distance</span>
+                                <strong id="live-distance">-- km</strong>
+                                <small id="dist-type">Road Distance</small>
+                            </div>
+                            <div class="r-metric">
+                                <span class="r-label"><i class="fa-solid fa-stopwatch"></i> Estimated Travel Time</span>
+                                <strong id="live-duration">-- hrs -- mins</strong>
+                                <small id="duration-detail">Based on selected mode</small>
+                            </div>
+                            <div class="r-metric">
+                                <span class="r-label"><i class="fa-solid fa-gas-pump"></i> Est. Transit Cost</span>
+                                <strong id="live-transport-cost">₹0</strong>
+                                <small id="cost-detail">Fuel / Tickets estimate</small>
+                            </div>
+                        </div>
+                        <div class="route-footer">
+                            <button type="button" id="apply-budget-btn" class="btn-text">
+                                <i class="fa-solid fa-wand-magic-sparkles"></i> Auto-fill estimated transit cost into Total Budget
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="form-grid" style="margin-top: 1.5rem;">
+                        <div class="form-group">
+                            <label for="departure"><i class="fa-solid fa-calendar-days"></i> Departure Date:</label>
+                            <input type="date" id="departure" name="departureDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="return"><i class="fa-solid fa-calendar-check"></i> Return Date:</label>
+                            <input type="date" id="return" name="returnDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="travellers"><i class="fa-solid fa-users"></i> Number of Travellers:</label>
+                            <input type="number" id="travellers" name="travellers" min="1" value="1" placeholder="Enter number of people" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="trip-budget"><i class="fa-solid fa-indian-rupee-sign"></i> Total Budget (₹):</label>
+                            <input type="number" id="trip-budget" name="budget" min="0" placeholder="Enter your total budget" required>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-submit">
+                        <i class="fa-solid fa-circle-check"></i> Create My Trip & Save Route
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- ITINERARY -->
+        <section id="itinerary" class="section section-alt">
+            <div class="section-header">
+                <h2>Your Travel Itinerary</h2>
+                <p>Organise your activities day by day.</p>
+            </div>
+
+            <div class="itinerary-grid">
+                <article class="itinerary-card">
+                    <div class="day-badge">Day 1</div>
+                    <div class="itinerary-body">
+                        <h3>Arrival & Check-in</h3>
+                        <ul class="timeline-list">
+                            <li><i class="fa-regular fa-circle-check"></i> Arrival at destination</li>
+                            <li><i class="fa-regular fa-circle-check"></i> Hotel check-in & relax</li>
+                            <li><i class="fa-regular fa-circle-check"></i> Explore nearby local markets</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="itinerary-card">
+                    <div class="day-badge">Day 2</div>
+                    <div class="itinerary-body">
+                        <h3>Sightseeing & Adventures</h3>
+                        <ul class="timeline-list">
+                            <li><i class="fa-regular fa-circle-check"></i> Visit popular tourist attractions</li>
+                            <li><i class="fa-regular fa-circle-check"></i> Enjoy local activities & sports</li>
+                            <li><i class="fa-regular fa-circle-check"></i> Authentic dinner at local café</li>
+                        </ul>
+                    </div>
+                </article>
+
+                <article class="itinerary-card">
+                    <div class="day-badge">Day 3</div>
+                    <div class="itinerary-body">
+                        <h3>Souvenirs & Departure</h3>
+                        <ul class="timeline-list">
+                            <li><i class="fa-regular fa-circle-check"></i> Explore remaining attractions</li>
+                            <li><i class="fa-regular fa-circle-check"></i> Souvenir shopping & photos</li>
+                            <li><i class="fa-regular fa-circle-check"></i> Packing & return journey</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- BUDGET TRACKER -->
+        <section id="budget" class="section">
+            <div class="section-header">
+                <h2>Travel Budget Tracker</h2>
+                <p>Keep track of your travel expenses seamlessly.</p>
+            </div>
+
+            <div class="budget-container">
+                <div class="budget-card">
+                    <h3><i class="fa-solid fa-list-check"></i> Expense Categories</h3>
+                    <ul class="categories-list">
+                        <li><span><i class="fa-solid fa-plane"></i> Transportation</span> <strong>₹0</strong></li>
+                        <li><span><i class="fa-solid fa-hotel"></i> Accommodation</span> <strong>₹0</strong></li>
+                        <li><span><i class="fa-solid fa-utensils"></i> Food & Dining</span> <strong>₹0</strong></li>
+                        <li><span><i class="fa-solid fa-ticket"></i> Activities & Entertainment</span> <strong>₹0</strong></li>
+                        <li><span><i class="fa-solid fa-bag-shopping"></i> Shopping & Misc</span> <strong>₹0</strong></li>
+                    </ul>
+                </div>
+
+                <div class="budget-card summary-card">
+                    <h3><i class="fa-solid fa-wallet"></i> Budget Summary</h3>
+                    <div class="summary-metrics">
+                        <div class="metric-item">
+                            <span class="metric-label">Total Budget</span>
+                            <span id="summary-total" class="metric-value">₹0</span>
+                        </div>
+                        <div class="metric-item">
+                            <span class="metric-label">Total Expenses</span>
+                            <span id="summary-expenses" class="metric-value spent">₹0</span>
+                        </div>
+                        <div class="metric-item highlight">
+                            <span class="metric-label">Remaining Balance</span>
+                            <span id="summary-balance" class="metric-value remaining">₹0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- MY TRIPS -->
+        <section id="trips" class="section section-alt">
+            <div class="section-header">
+                <h2>My Trips</h2>
+                <p>View and manage your planned adventures.</p>
+            </div>
+
+            <div class="trips-grid">
+                <article class="trip-box">
+                    <h3><i class="fa-solid fa-plane-departure"></i> Upcoming Trips</h3>
+                    <div id="upcoming-trips-list" class="trip-empty-state">
+                        <i class="fa-regular fa-calendar-xmark"></i>
+                        <p>No upcoming trips scheduled yet. Use the planner above to create one!</p>
+                    </div>
+                </article>
+
+                <article class="trip-box">
+                    <h3><i class="fa-solid fa-clock-rotate-left"></i> Completed Trips</h3>
+                    <div id="completed-trips-list" class="trip-empty-state">
+                        <i class="fa-solid fa-mountain-sun"></i>
+                        <p>Your completed travel memories will appear here once archived.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <a href="#home" class="logo">
+                    <i class="fa-solid fa-compass"></i> TripMate<span>.</span>
+                </a>
+                <p>Your journey begins here. Plan smarter, travel better, and explore the wonders of the world.</p>
+            </div>
+
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <nav>
+                    <a href="#home">Home</a>
+                    <a href="#explore">Explore</a>
+                    <a href="#planner">Plan Trip</a>
+                    <a href="#itinerary">Itinerary</a>
+                    <a href="#budget">Budget</a>
+                    <a href="#trips">My Trips</a>
+                </nav>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 TripMate. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- PLACE DETAIL SPOTLIGHT MODAL -->
+    <div id="place-modal" class="modal-backdrop hidden" aria-hidden="true">
+        <div class="modal-card">
+            <button id="close-modal-btn" class="modal-close" aria-label="Close dialog">&times;</button>
+            <div class="modal-grid">
+                <div class="modal-img-wrapper">
+                    <img id="modal-img" src="" alt="Place photo">
+                    <span id="modal-badge" class="card-badge">Spotlight</span>
+                </div>
+                <div class="modal-info">
+                    <div class="modal-header">
+                        <span id="modal-zone" class="modal-zone-tag">Northern Zone</span>
+                        <h2 id="modal-title">Place Name</h2>
+                        <p id="modal-location" class="modal-location"><i class="fa-solid fa-location-dot"></i> City, State</p>
+                    </div>
+
+                    <div class="modal-metrics-grid">
+                        <div class="modal-metric">
+                            <span class="m-label"><i class="fa-solid fa-star" style="color: #f59e0b;"></i> Rating</span>
+                            <strong id="modal-rating">4.6 / 5.0</strong>
+                            <small id="modal-reviews">2.6L+ reviews</small>
+                        </div>
+                        <div class="modal-metric">
+                            <span class="m-label"><i class="fa-solid fa-ticket" style="color: #10b981;"></i> Entry Fee</span>
+                            <strong id="modal-fee">Free Entry</strong>
+                            <small>Per person</small>
+                        </div>
+                        <div class="modal-metric">
+                            <span class="m-label"><i class="fa-solid fa-clock" style="color: #0284c7;"></i> Time Needed</span>
+                            <strong id="modal-time">2.0 hrs</strong>
+                            <small>Avg. duration</small>
+                        </div>
+                        <div class="modal-metric">
+                            <span class="m-label"><i class="fa-solid fa-sun" style="color: #f97316;"></i> Best Time</span>
+                            <strong id="modal-best-time">Evening</strong>
+                            <small>Recommended</small>
+                        </div>
+                    </div>
+
+                    <div class="modal-details-list">
+                        <div class="detail-row">
+                            <span><i class="fa-solid fa-landmark"></i> Type & Significance:</span>
+                            <strong id="modal-type-sig">War Memorial (Historical)</strong>
+                        </div>
+                        <div class="detail-row">
+                            <span><i class="fa-solid fa-calendar-xmark"></i> Weekly Off:</span>
+                            <strong id="modal-weekly-off">Open All Days</strong>
+                        </div>
+                        <div class="detail-row">
+                            <span><i class="fa-solid fa-plane"></i> Airport within 50km:</span>
+                            <strong id="modal-airport">Yes</strong>
+                        </div>
+                        <div class="detail-row">
+                            <span><i class="fa-solid fa-camera"></i> DSLR Allowed:</span>
+                            <strong id="modal-dslr">Yes</strong>
+                        </div>
+                    </div>
+
+                    <div class="modal-actions">
+                        <button id="modal-plan-trip-btn" class="btn btn-primary">
+                            <i class="fa-solid fa-paper-plane"></i> Plan Trip To This City
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- =====================================================================
+         AUTH MODAL
+    ====================================================================== -->
+    <div id="auth-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="Login / Sign Up">
+        <div class="auth-card">
+
+            <!-- Close button -->
+            <button class="auth-modal-close" id="auth-modal-close" aria-label="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Logo / Brand -->
+            <div class="auth-brand">
+                <i class="fa-solid fa-compass"></i>
+                <span>TripMate<span class="auth-brand-dot">.</span></span>
+            </div>
+            <p class="auth-subtitle">Your adventure, your account.</p>
+
+            <!-- Tab Switcher -->
+            <div class="auth-tabs">
+                <button class="auth-tab-btn active" data-tab="login">
+                    <i class="fa-solid fa-right-to-bracket"></i> Login
+                </button>
+                <button class="auth-tab-btn" data-tab="signup">
+                    <i class="fa-solid fa-user-plus"></i> Sign Up
+                </button>
+            </div>
+
+            <!-- ============================================================
+                 LOGIN PANEL
+            ============================================================= -->
+            <div class="auth-tab-panel active" data-tab-panel="login">
+
+                <!-- Step 1: Credentials -->
+                <div class="auth-step active" id="login-creds-step">
+                    <h3 class="auth-step-title">Welcome back, Traveller 👋</h3>
+                    <p class="auth-step-sub">Login with your registered phone or email.</p>
+
+                    <div class="auth-field">
+                        <label><i class="fa-solid fa-id-card"></i> Phone Number or Email</label>
+                        <input type="text" id="login-identifier" placeholder="9876543210 or you@email.com" autocomplete="username">
+                    </div>
+                    <div class="auth-field">
+                        <label><i class="fa-solid fa-lock"></i> Password</label>
+                        <div class="password-wrap">
+                            <input type="password" id="login-password" placeholder="Enter your password" autocomplete="current-password">
+                            <button type="button" class="toggle-pw-btn" data-target="login-password"><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                    </div>
+
+                    <p class="auth-error" id="login-creds-error"></p>
+                    <button class="btn auth-submit-btn" id="login-proceed-btn">
+                        <i class="fa-solid fa-arrow-right"></i> Continue
+                    </button>
+                </div>
+
+                <!-- Step 2: OTP Verification -->
+                <div class="auth-step" id="login-otp-step">
+                    <h3 class="auth-step-title">Verify it's you 🔐</h3>
+                    <p class="auth-step-sub">Enter the 6-digit code sent by TripMate Bot.</p>
+
+                    <!-- Bot OTP Bubble -->
+                    <div id="login-otp-bubble" class="otp-bot-bubble" style="display:none;"></div>
+
+                    <div class="otp-input-row">
+                        <input type="text" class="otp-digit" maxlength="1" inputmode="numeric" autocomplete="one-time-code">
+                        <input type="text" class="otp-digit" maxlength="1" inputmode="numeric">
+                        <input type="text" class="otp-digit" maxlength="1" inputmode="numeric">
+                        <input type="text" class="otp-digit" maxlength="1" inputmode="numeric">
+                        <input type="text" class="otp-digit" maxlength="1" inputmode="numeric">
+                        <input type="text" class="otp-digit" maxlength="1" inputmode="numeric">
+                    </div>
+                    <p class="auth-error" id="login-otp-error"></p>
+                    <button class="btn auth-submit-btn" id="login-verify-otp-btn">
+                        <i class="fa-solid fa-shield-halved"></i> Verify OTP
+                    </button>
+                    <p class="auth-resend-row">Didn't get it? <button class="resend-otp-btn">Resend OTP</button></p>
+                </div>
+
+                <!-- Step 3: Success -->
+                <div class="auth-step" id="login-success-step">
+                    <div class="auth-success-screen">
+                        <div class="success-avatar-wrap">
+                            <div class="success-avatar">U</div>
+                            <div class="success-check"><i class="fa-solid fa-check"></i></div>
+                        </div>
+                        <h3>Welcome back, <span class="success-name">Traveller</span>! 🎉</h3>
+                        <p>You're all set to plan your next adventure.</p>
+                        <button class="btn auth-submit-btn" id="login-done-btn">
+                            <i class="fa-solid fa-compass"></i> Let's Explore!
+                        </button>
+                    </div>
+                </div>
+
+            </div><!-- end login panel -->
+
+            <!-- ============================================================
+                 SIGNUP PANEL
+            ============================================================= -->
+            <div class="auth-tab-panel" data-tab-panel="signup">
+
+                <!-- Step 1: Credentials -->
+                <div class="auth-step active" id="signup-creds-step">
+                    <h3 class="auth-step-title">Create Your Account ✨</h3>
+
+                    <!-- Contact method chooser -->
+                    <div class="contact-method-row">
+                        <label class="contact-method-option">
+                            <input type="radio" name="contact-method" value="phone" checked>
+                            <span><i class="fa-solid fa-mobile-screen-button"></i> Phone</span>
+                        </label>
+                        <label class="contact-method-option">
+                            <input type="radio" name="contact-method" value="email">
+                            <span><i class="fa-solid fa-envelope"></i> Email</span>
+                        </label>
+                    </div>
+
+                    <div id="signup-phone-wrap" class="auth-field">
+                        <label><i class="fa-solid fa-phone"></i> Mobile Number</label>
+                        <div class="phone-input-wrap">
+                            <span class="phone-prefix">🇮🇳 +91</span>
+                            <input type="tel" id="signup-phone" placeholder="9876543210" maxlength="10" inputmode="numeric">
+                        </div>
+                    </div>
+                    <div id="signup-email-wrap" class="auth-field" style="display:none;">
+                        <label><i class="fa-solid fa-envelope"></i> Email Address</label>
+                        <input type="email" id="signup-email" placeholder="you@example.com" autocomplete="email">
+                    </div>
+
+                    <div class="auth-field">
+                        <label><i class="fa-solid fa-lock"></i> Create Password</label>
+                        <div class="password-wrap">
+                            <input type="password" id="signup-password" placeholder="Minimum 8 characters" autocomplete="new-password">
+                            <button type="button" class="toggle-pw-btn" data-target="signup-password"><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="auth-field">
+                        <label><i class="fa-solid fa-lock-open"></i> Confirm Password</label>
+                        <div class="password-wrap">
+                            <input type="password" id="signup-confirm-password" placeholder="Re-enter your password" autocomplete="new-password">
+                            <button type="button" class="toggle-pw-btn" data-target="signup-confirm-password"><i class="fa-solid fa-eye"></i></button>
+                        </div>
+                    </div>
+
+                    <p class="auth-error" id="signup-creds-error"></p>
+                    <button class="btn auth-submit-btn" id="signup-proceed-btn">
+                        <i class="fa-solid fa-arrow-right"></i> Send OTP & Continue
+                    </button>
+                </div>
+
+                <!-- Step 2: OTP Verification -->
+                <div class="auth-step" id="signup-otp-step">
+                    <h3 class="auth-step-title">Verify Your Contact 🔐</h3>
+                    <p class="auth-step-sub">TripMate Bot has sent you a 6-digit code.</p>
+
+                    <!-- Bot OTP Bubble -->
+                    <div id="signup-otp-bubble" class="otp-bot-bubble" style="display:none;"></div>
+
+                    <div class="otp-input-row">
+                        <input type="text" class="otp-digit" maxlength="1" inputmode="numeric" autocomplete="one-time-code">
+                        <input type="text" class="otp-digit" maxlength="1" inputmode="numeric">
+                        <input type="text" class="otp-digit" maxlength="1" inputmode="numeric">
+                        <input type="text" class="otp-digit" maxlength="1" inputmode="numeric">
+                        <input type="text" class="otp-digit" maxlength="1" inputmode="numeric">
+                        <input type="text" class="otp-digit" maxlength="1" inputmode="numeric">
+                    </div>
+                    <p class="auth-error" id="signup-otp-error"></p>
+                    <button class="btn auth-submit-btn" id="signup-verify-otp-btn">
+                        <i class="fa-solid fa-shield-halved"></i> Verify OTP
+                    </button>
+                    <p class="auth-resend-row">Didn't get it? <button class="resend-otp-btn">Resend OTP</button></p>
+                </div>
+
+                <!-- Step 3: Profile Details -->
+                <div class="auth-step" id="signup-profile-step">
+                    <h3 class="auth-step-title">Complete Your Profile 🧭</h3>
+                    <p class="auth-step-sub">Tell us about yourself so we can personalise your trip.</p>
+
+                    <div class="profile-form-grid">
+                        <div class="auth-field">
+                            <label><i class="fa-solid fa-user"></i> Full Name</label>
+                            <input type="text" id="profile-name" placeholder="Rahul Sharma" autocomplete="name">
+                        </div>
+                        <div class="auth-field">
+                            <label><i class="fa-solid fa-cake-candles"></i> Age</label>
+                            <input type="number" id="profile-age" placeholder="25" min="13" max="120">
+                        </div>
+                        <div class="auth-field">
+                            <label><i class="fa-solid fa-phone"></i> Phone Number</label>
+                            <div class="phone-input-wrap">
+                                <span class="phone-prefix">🇮🇳 +91</span>
+                                <input type="tel" id="profile-phone" placeholder="9876543210" maxlength="10">
+                            </div>
+                        </div>
+                        <div class="auth-field">
+                            <label><i class="fa-solid fa-envelope"></i> Email Address</label>
+                            <input type="email" id="profile-email" placeholder="you@example.com">
+                        </div>
+                        <div class="auth-field">
+                            <label><i class="fa-solid fa-city"></i> City</label>
+                            <input type="text" id="profile-city" placeholder="Mumbai" list="profile-city-list" autocomplete="off">
+                            <datalist id="profile-city-list"></datalist>
+                        </div>
+                        <div class="auth-field">
+                            <label><i class="fa-solid fa-map"></i> State</label>
+                            <select id="profile-state" class="auth-select">
+                                <option value="">— Select State —</option>
+                            </select>
+                        </div>
+                        <div class="auth-field auth-field--full">
+                            <label><i class="fa-solid fa-globe"></i> Country</label>
+                            <input type="text" value="India 🇮🇳" readonly class="auth-readonly-field">
+                        </div>
+                    </div>
+
+                    <!-- Payment Method -->
+                    <div class="payment-section">
+                        <label class="payment-section-label">
+                            <i class="fa-solid fa-credit-card"></i> Preferred Payment Method
+                        </label>
+                        <div class="payment-method-grid">
+                            <div class="payment-option" data-method="UPI">
+                                <i class="fa-solid fa-mobile-screen"></i>
+                                <span>UPI</span>
+                                <small>PhonePe, GPay, Paytm</small>
+                            </div>
+                            <div class="payment-option" data-method="Credit Card">
+                                <i class="fa-solid fa-credit-card"></i>
+                                <span>Credit Card</span>
+                                <small>Visa, Mastercard, RuPay</small>
+                            </div>
+                            <div class="payment-option" data-method="Debit Card">
+                                <i class="fa-solid fa-credit-card"></i>
+                                <span>Debit Card</span>
+                                <small>All major banks</small>
+                            </div>
+                            <div class="payment-option" data-method="Net Banking">
+                                <i class="fa-solid fa-building-columns"></i>
+                                <span>Net Banking</span>
+                                <small>Direct bank transfer</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="auth-error" id="signup-profile-error"></p>
+                    <button class="btn auth-submit-btn" id="signup-complete-btn">
+                        <i class="fa-solid fa-check"></i> Complete Sign Up
+                    </button>
+                </div>
+
+                <!-- Step 4: Success -->
+                <div class="auth-step" id="signup-success-step">
+                    <div class="auth-success-screen">
+                        <div class="success-avatar-wrap">
+                            <div class="success-avatar">U</div>
+                            <div class="success-check"><i class="fa-solid fa-check"></i></div>
+                        </div>
+                        <h3>Account created, <span class="success-name">Traveller</span>! 🎉</h3>
+                        <p>Your TripMate account is ready. Start planning your next adventure!</p>
+                        <div class="success-badges">
+                            <span><i class="fa-solid fa-shield-halved"></i> Verified</span>
+                            <span><i class="fa-solid fa-map-location-dot"></i> India Explorer</span>
+                        </div>
+                        <button class="btn auth-submit-btn" id="signup-done-btn">
+                            <i class="fa-solid fa-compass"></i> Start Exploring!
+                        </button>
+                    </div>
+                </div>
+
+            </div><!-- end signup panel -->
+
+        </div><!-- end .auth-card -->
+    </div><!-- end #auth-modal -->
+
+    <!-- TOAST NOTIFICATION -->
+    <div id="tm-toast" class="tm-toast" aria-live="polite"></div>
+
+    <!-- JAVASCRIPT DATASET & LOGIC -->
+    <script src="indian-cities.js"></script>
+    <script src="places-data.js"></script>
+    <script src="city-experiences-data.js"></script>
+    <script src="script.js"></script>
+    <script src="auth.js"></script>
+</body>
+
+</html>
